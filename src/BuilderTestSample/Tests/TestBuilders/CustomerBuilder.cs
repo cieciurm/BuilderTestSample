@@ -1,5 +1,6 @@
 ﻿using System;
 using BuilderTestSample.Model;
+using BuilderTestSample.Services;
 
 namespace BuilderTestSample.Tests.TestBuilders
 {
@@ -11,12 +12,14 @@ namespace BuilderTestSample.Tests.TestBuilders
         private Address _homeAddress;
         private string _firstName;
         private string _lastName;
+        private int _creditRanking;
 
         public CustomerBuilder()
         {
             _customerId = _random.Next();
             _firstName = Guid.NewGuid().ToString();
             _lastName = Guid.NewGuid().ToString();
+            _creditRanking = _random.Next(OrderService.MinCreditRanking + 1, int.MaxValue);
         }
 
         public CustomerBuilder WithId(int id)
@@ -37,6 +40,12 @@ namespace BuilderTestSample.Tests.TestBuilders
             return this;
         }
 
+        public CustomerBuilder WithCreditRanking(int creditRanking)
+        {
+            _creditRanking = creditRanking;
+            return this;
+        }
+
         public CustomerBuilder WithHomeAddress(Address homeAddress)
         {
             _homeAddress = homeAddress;
@@ -50,6 +59,7 @@ namespace BuilderTestSample.Tests.TestBuilders
                 HomeAddress = _homeAddress,
                 FirstName = _firstName,
                 LastName = _lastName,
+                CreditRating = _creditRanking,
             };
         }
     }

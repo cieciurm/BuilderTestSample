@@ -7,6 +7,8 @@ namespace BuilderTestSample.Services
 {
     public class OrderService
     {
+        public const int MinCreditRanking = 200;
+
         public void PlaceOrder(Order order)
         {
             ValidateOrder(order);
@@ -55,7 +57,11 @@ namespace BuilderTestSample.Services
                 throw new InvalidCustomerException("Customer must have a first and last name");
             }
 
-            // TODO: customer must have credit rating > 200 (otherwise throw InsufficientCreditException)
+            if (customer.CreditRating <= MinCreditRanking)
+            {
+                throw new InsufficientCreditException("Customer must have credit rating > 200");
+            }
+
             // TODO: customer must have total purchases >= 0
 
             ValidateAddress(customer.HomeAddress);

@@ -86,5 +86,22 @@ namespace BuilderTestSample.Tests
 
             Assert.Throws<InvalidCustomerException>(() => _orderService.PlaceOrder(order));
         }
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(100)]
+        [InlineData(200)]
+        public void PlaceOrder_WhenCustomerHasCreditRankingLowerOrEqualToMin_ThenThrowsException(int creditRanking)
+        {
+            var customer = _customerBuilder
+                .WithCreditRanking(creditRanking)
+                .Build();
+
+            var order = _orderBuilder
+                .WithCustomer(customer)
+                .Build();
+
+            Assert.Throws<InvalidCustomerException>(() => _orderService.PlaceOrder(order));
+        }
     }
 }
