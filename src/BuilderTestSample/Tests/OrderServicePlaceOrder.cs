@@ -1,6 +1,5 @@
-using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using BuilderTestSample.Exceptions;
-using BuilderTestSample.Model;
 using BuilderTestSample.Services;
 using BuilderTestSample.Tests.TestBuilders;
 using Xunit;
@@ -180,6 +179,22 @@ namespace BuilderTestSample.Tests
 
             // Assert
             Assert.Equal(expectedTotalPurchases, customer.TotalPurchases);
+        }
+
+        [Fact]
+        public void PlaceOrder_WhenAddressStreet1IsNullOrEmpty_ThenThrowsException()
+        {
+            var address = new AddressBuilder()
+                .WithStreet1(string.Empty)
+                .Build();
+
+            var customer = new CustomerBuilder()
+                .WithHomeAddress(address)
+                .Build();
+
+            var order = new OrderBuilder().WithCustomer(customer).Build();
+
+            Assert.Throws<InvalidAddressException>(() => _orderService.PlaceOrder(order));
         }
     }
 }
