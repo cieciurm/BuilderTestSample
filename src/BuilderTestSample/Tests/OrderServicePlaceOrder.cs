@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using BuilderTestSample.Exceptions;
 using BuilderTestSample.Services;
 using BuilderTestSample.Tests.TestBuilders;
@@ -186,6 +185,70 @@ namespace BuilderTestSample.Tests
         {
             var address = new AddressBuilder()
                 .WithStreet1(string.Empty)
+                .Build();
+
+            var customer = new CustomerBuilder()
+                .WithHomeAddress(address)
+                .Build();
+
+            var order = new OrderBuilder().WithCustomer(customer).Build();
+
+            Assert.Throws<InvalidAddressException>(() => _orderService.PlaceOrder(order));
+        }
+
+        [Fact]
+        public void PlaceOrder_WhenAddressCityIsNullOrEmpty_ThenThrowsException()
+        {
+            var address = new AddressBuilder()
+                .WithCity(string.Empty)
+                .Build();
+
+            var customer = new CustomerBuilder()
+                .WithHomeAddress(address)
+                .Build();
+
+            var order = new OrderBuilder().WithCustomer(customer).Build();
+
+            Assert.Throws<InvalidAddressException>(() => _orderService.PlaceOrder(order));
+        }
+
+        [Fact]
+        public void PlaceOrder_WhenAddressCountryIsNullOrEmpty_ThenThrowsException()
+        {
+            var address = new AddressBuilder()
+                .WithCountry(string.Empty)
+                .Build();
+
+            var customer = new CustomerBuilder()
+                .WithHomeAddress(address)
+                .Build();
+
+            var order = new OrderBuilder().WithCustomer(customer).Build();
+
+            Assert.Throws<InvalidAddressException>(() => _orderService.PlaceOrder(order));
+        }
+
+        [Fact]
+        public void PlaceOrder_WhenAddressStateIsNullOrEmpty_ThenThrowsException()
+        {
+            var address = new AddressBuilder()
+                .WithState(string.Empty)
+                .Build();
+
+            var customer = new CustomerBuilder()
+                .WithHomeAddress(address)
+                .Build();
+
+            var order = new OrderBuilder().WithCustomer(customer).Build();
+
+            Assert.Throws<InvalidAddressException>(() => _orderService.PlaceOrder(order));
+        }
+
+        [Fact]
+        public void PlaceOrder_WhenAddressPostalCodeIsNullOrEmpty_ThenThrowsException()
+        {
+            var address = new AddressBuilder()
+                .WithPostalCode(string.Empty)
                 .Build();
 
             var customer = new CustomerBuilder()

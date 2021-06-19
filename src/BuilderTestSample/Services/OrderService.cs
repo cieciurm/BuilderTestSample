@@ -1,5 +1,4 @@
-﻿using System.Data;
-using BuilderTestSample.Exceptions;
+﻿using BuilderTestSample.Exceptions;
 using BuilderTestSample.Model;
 
 namespace BuilderTestSample.Services
@@ -84,10 +83,25 @@ namespace BuilderTestSample.Services
                 throw new InvalidAddressException("Street1 is required");
             }
 
-            // TODO: city is required (not null or empty)
-            // TODO: state is required (not null or empty)
-            // TODO: postalcode is required (not null or empty)
-            // TODO: country is required (not null or empty)
+            if (string.IsNullOrWhiteSpace(homeAddress.City))
+            {
+                throw new InvalidAddressException("City is required");
+            }
+
+            if (string.IsNullOrWhiteSpace(homeAddress.State))
+            {
+                throw new InvalidAddressException("State is required");
+            }
+
+            if (string.IsNullOrWhiteSpace(homeAddress.PostalCode))
+            {
+                throw new InvalidAddressException("Postal code is required");
+            }
+
+            if (string.IsNullOrWhiteSpace(homeAddress.Country))
+            {
+                throw new InvalidAddressException("Country is required");
+            }
         }
 
         private void ExpediteOrder(Order order)
