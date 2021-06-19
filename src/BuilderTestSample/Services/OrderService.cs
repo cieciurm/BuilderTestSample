@@ -99,9 +99,11 @@ namespace BuilderTestSample.Services
 
         private void AddOrderToCustomerHistory(Order order)
         {
-            order.Customer.OrderHistory.Add(order);
+            var customer = order.Customer;
 
-            // TODO: update the customer's total purchases property
+            customer.OrderHistory.Add(order);
+
+            customer.TotalPurchases += order.TotalAmount;
         }
     }
 }

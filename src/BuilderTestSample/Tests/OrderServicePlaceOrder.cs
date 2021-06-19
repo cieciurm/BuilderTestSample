@@ -159,5 +159,27 @@ namespace BuilderTestSample.Tests
             // Assert
             Assert.Contains(placedOrder.Customer.OrderHistory, x => x.Id == placedOrder.Id);
         }
+
+        [Theory]
+        [InlineData(1000, 100, 1100)]
+        [InlineData(0, 100, 100)]
+        public void PlaceOrder_WhenOrderPlaced_ThenItIncreasesTotalPurchases(decimal totalPurchases, decimal totalAmount, decimal expectedTotalPurchases)
+        {
+            // Arrange
+            var customer = _customerBuilder
+                .WithTotalPurchases(totalPurchases)
+                .Build();
+
+            var order = _orderBuilder
+                .WithCustomer(customer)
+                .WithTotalAmount(totalAmount)
+                .Build();
+
+            // Act
+            _orderService.PlaceOrder(order);
+
+            // Assert
+            Assert.Equal(expectedTotalPurchases, customer.TotalPurchases);
+        }
     }
 }
