@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using BuilderTestSample.Exceptions;
 using BuilderTestSample.Services;
 using BuilderTestSample.Tests.TestBuilders;
@@ -95,6 +96,22 @@ namespace BuilderTestSample.Tests
         {
             var customer = _customerBuilder
                 .WithCreditRanking(creditRanking)
+                .Build();
+
+            var order = _orderBuilder
+                .WithCustomer(customer)
+                .Build();
+
+            Assert.Throws<InsufficientCreditException>(() => _orderService.PlaceOrder(order));
+        }
+
+        [Theory]
+        [InlineData(-2)]
+        [InlineData(-1)]
+        public void PlaceOrder_ThenCustomerHasLessOrEqualToZeroTotalPurchases_ThenThrowsException(decimal totalPurchases)
+        {
+            var customer = _customerBuilder
+                .WithTotalPurchases(totalPurchases)
                 .Build();
 
             var order = _orderBuilder

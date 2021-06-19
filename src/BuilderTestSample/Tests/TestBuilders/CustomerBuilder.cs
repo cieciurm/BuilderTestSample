@@ -13,6 +13,7 @@ namespace BuilderTestSample.Tests.TestBuilders
         private string _firstName;
         private string _lastName;
         private int _creditRanking;
+        private decimal _totalPurchases;
 
         public CustomerBuilder()
         {
@@ -20,6 +21,8 @@ namespace BuilderTestSample.Tests.TestBuilders
             _firstName = Guid.NewGuid().ToString();
             _lastName = Guid.NewGuid().ToString();
             _creditRanking = _random.Next(OrderService.MinCreditRanking + 1, int.MaxValue);
+            _totalPurchases = Convert.ToDecimal(_random.NextDouble());
+            _homeAddress = new AddressBuilder().Build();
         }
 
         public CustomerBuilder WithId(int id)
@@ -45,6 +48,11 @@ namespace BuilderTestSample.Tests.TestBuilders
             _creditRanking = creditRanking;
             return this;
         }
+        public CustomerBuilder WithTotalPurchases(decimal totalPurchases)
+        {
+            _totalPurchases = totalPurchases;
+            return this;
+        }
 
         public CustomerBuilder WithHomeAddress(Address homeAddress)
         {
@@ -60,6 +68,7 @@ namespace BuilderTestSample.Tests.TestBuilders
                 FirstName = _firstName,
                 LastName = _lastName,
                 CreditRating = _creditRanking,
+                TotalPurchases = _totalPurchases,
             };
         }
     }
