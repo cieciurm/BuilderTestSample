@@ -14,12 +14,7 @@ namespace BuilderTestSample.Tests.TestBuilders
             _order.Id = 0;
             _order.TotalAmount = 100m;
 
-            var homeAddress = new AddressBuilder()
-                .Build();
-
-            _order.Customer = new CustomerBuilder()
-                .WithHomeAddress(homeAddress)
-                .Build();
+            _order.Customer = new CustomerBuilder().Build();
         }
 
         public OrderBuilder WithTotalAmount(decimal totalAmount)
