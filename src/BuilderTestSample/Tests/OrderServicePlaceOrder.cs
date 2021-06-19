@@ -119,5 +119,29 @@ namespace BuilderTestSample.Tests
 
             Assert.Throws<InvalidCustomerException>(() => _orderService.PlaceOrder(order));
         }
+
+        [Theory]
+        [InlineData(100, 300, false)]
+        [InlineData(5000, 500, false)]
+        [InlineData(5001, 501, true)]
+        public void PlaceOrder_WhenCustomerHasCertainTotalPurchasesAndCreditRanking_ThenIsExpeditedIsSetAccordingly(
+            decimal totalPurchases, int creditRanking, bool expectedIsExpedited)
+        {
+            // Arrange
+            var customer = _customerBuilder
+                .WithTotalPurchases(totalPurchases)
+                .WithCreditRanking(creditRanking)
+                .Build();
+
+            var order = _orderBuilder
+                .WithCustomer(customer)
+                .Build();
+
+            // Act
+            var placedOrder = _orderService.PlaceOrder(order);
+
+            // Assert
+            Assert.Equal(expectedIsExpedited, placedOrder.IsExpedited);
+        }
     }
 }

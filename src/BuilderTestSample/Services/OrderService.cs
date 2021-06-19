@@ -1,4 +1,5 @@
-﻿using BuilderTestSample.Exceptions;
+﻿using System.Data;
+using BuilderTestSample.Exceptions;
 using BuilderTestSample.Model;
 
 namespace BuilderTestSample.Services
@@ -6,14 +7,18 @@ namespace BuilderTestSample.Services
     public class OrderService
     {
         public const int MinCreditRanking = 200;
+        private const int MinTotalPurchasesToBeExpedited = 5000;
+        private const int MinCreditRankingToBeExpedited = 500;
 
-        public void PlaceOrder(Order order)
+        public Order PlaceOrder(Order order)
         {
             ValidateOrder(order);
 
             ExpediteOrder(order);
 
             AddOrderToCustomerHistory(order);
+
+            return order;
         }
 
         private void ValidateOrder(Order order)
@@ -84,7 +89,12 @@ namespace BuilderTestSample.Services
 
         private void ExpediteOrder(Order order)
         {
-            // TODO: if customer's total purchases > 5000 and credit rating > 500 set IsExpedited to true
+            var customer = order.Customer;
+
+            if (customer.TotalPurchases > MinTotalPurchasesToBeExpedited && customer.CreditRating > MinCreditRankingToBeExpedited)
+            {
+                order.IsExpedited = true;
+            }
         }
 
         private void AddOrderToCustomerHistory(Order order)
