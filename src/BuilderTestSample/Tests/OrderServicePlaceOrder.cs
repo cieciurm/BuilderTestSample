@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using BuilderTestSample.Exceptions;
+using BuilderTestSample.Model;
 using BuilderTestSample.Services;
 using BuilderTestSample.Tests.TestBuilders;
 using Xunit;
@@ -142,6 +144,20 @@ namespace BuilderTestSample.Tests
 
             // Assert
             Assert.Equal(expectedIsExpedited, placedOrder.IsExpedited);
+        }
+
+        [Fact]
+        public void PlaceOrder_WhenOrderPlaced_ThenItIsAddedToCustomersOrderHistory()
+        {
+            // Arrange
+            var order = _orderBuilder
+                .Build();
+
+            // Act
+            var placedOrder = _orderService.PlaceOrder(order);
+
+            // Assert
+            Assert.Contains(placedOrder.Customer.OrderHistory, x => x.Id == placedOrder.Id);
         }
     }
 }
