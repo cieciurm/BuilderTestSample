@@ -1,13 +1,10 @@
-﻿using System;
-using BuilderTestSample.Model;
+﻿using BuilderTestSample.Model;
 using BuilderTestSample.Services;
 
 namespace BuilderTestSample.Tests.TestBuilders
 {
     public class CustomerBuilder
     {
-        private readonly Random _random = new Random();
-
         private int _customerId;
         private Address _homeAddress;
         private string _firstName;
@@ -17,11 +14,11 @@ namespace BuilderTestSample.Tests.TestBuilders
 
         public CustomerBuilder()
         {
-            _customerId = _random.Next();
-            _firstName = Guid.NewGuid().ToString();
-            _lastName = Guid.NewGuid().ToString();
-            _creditRanking = _random.Next(OrderService.MinCreditRanking + 1, int.MaxValue);
-            _totalPurchases = Convert.ToDecimal(_random.NextDouble());
+            _customerId = RandomValue.Int32;
+            _firstName = RandomValue.String;
+            _lastName = RandomValue.String;
+            _creditRanking = RandomValue.Int32WithMinValue(OrderService.MinCreditRanking + 1);
+            _totalPurchases = RandomValue.Decimal;
             _homeAddress = new AddressBuilder().Build();
         }
 

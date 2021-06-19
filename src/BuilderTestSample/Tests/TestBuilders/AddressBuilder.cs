@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BuilderTestSample.Model;
 
 namespace BuilderTestSample.Tests.TestBuilders
@@ -15,6 +11,13 @@ namespace BuilderTestSample.Tests.TestBuilders
         {
             _address = new Address
             {
+                City = RandomValue.String,
+                Country = RandomValue.String,
+                PostalCode = RandomValue.String,
+                State = RandomValue.String,
+                Street1 = RandomValue.String,
+                Street2 = RandomValue.String,
+                Street3 = RandomValue.String,
             };
         }
 

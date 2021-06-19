@@ -1,7 +1,5 @@
-﻿using System;
-using BuilderTestSample.Exceptions;
+﻿using BuilderTestSample.Exceptions;
 using BuilderTestSample.Model;
-using Xunit.Sdk;
 
 namespace BuilderTestSample.Services
 {
@@ -22,16 +20,19 @@ namespace BuilderTestSample.Services
         {
             // throw InvalidOrderException unless otherwise noted.
 
-            if (order.Id != 0) throw new InvalidOrderException("Order ID must be 0.");
+            if (order.Id != 0)
+            {
+                throw new InvalidOrderException("Order ID must be 0.");
+            }
 
             if (order.TotalAmount == 0)
             {
-                throw new InvalidOrderException("TotalAmount has to be greater than 0");
+                throw new InvalidOrderException("Order amount must be greater than zero");
             }
 
             if (order.Customer == null)
             {
-                throw new InvalidOrderException("Customer cannot be empty");
+                throw new InvalidOrderException("Order must have a customer");
             }
 
             ValidateCustomer(order.Customer);
@@ -40,16 +41,15 @@ namespace BuilderTestSample.Services
         private void ValidateCustomer(Customer customer)
         {
             // throw InvalidCustomerException unless otherwise noted
-            // create a CustomerBuilder to implement the tests for these scenarios
 
             if (customer.Id <= 0)
             {
-                throw new InvalidCustomerException("Customer ID has to be greater than 0");
+                throw new InvalidCustomerException("Customer must have an ID > 0");
             }
 
             if (customer.HomeAddress == null)
             {
-                throw new InvalidCustomerException("HomeAddress cannot be empty");
+                throw new InvalidCustomerException("Customer must have an address");
             }
 
             if (string.IsNullOrWhiteSpace(customer.FirstName) || string.IsNullOrWhiteSpace(customer.LastName))
