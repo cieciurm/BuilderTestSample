@@ -69,5 +69,22 @@ namespace BuilderTestSample.Tests
             Assert.Throws<InvalidCustomerException>(() => _orderService.PlaceOrder(order));
         }
 
+        [Theory]
+        [InlineData("", "")]
+        [InlineData("John", "")]
+        [InlineData("", "Doe")]
+        public void PlaceOrder_WhenCustomerFirstOrLastNameIsNull_ThenThrowsException(string firstName, string lastName)
+        {
+            var customer = _customerBuilder
+                .WithFirstName(firstName)
+                .WithLastName(lastName)
+                .Build();
+
+            var order = _orderBuilder
+                .WithCustomer(customer)
+                .Build();
+
+            Assert.Throws<InvalidCustomerException>(() => _orderService.PlaceOrder(order));
+        }
     }
 }

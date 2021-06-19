@@ -49,7 +49,12 @@ namespace BuilderTestSample.Services
             {
                 throw new InvalidCustomerException("HomeAddress cannot be empty");
             }
-            // TODO: customer must have a first and last name
+
+            if (string.IsNullOrWhiteSpace(customer.FirstName) || string.IsNullOrWhiteSpace(customer.LastName))
+            {
+                throw new InvalidCustomerException("Customer must have a first and last name");
+            }
+
             // TODO: customer must have credit rating > 200 (otherwise throw InsufficientCreditException)
             // TODO: customer must have total purchases >= 0
 
