@@ -7,8 +7,8 @@ namespace BuilderTestSample.Tests
 {
     public class OrderServicePlaceOrder
     {
-        private readonly OrderService _orderService = new ();
-        private readonly OrderBuilder _orderBuilder = new ();
+        private readonly OrderService _orderService = new();
+        private readonly OrderBuilder _orderBuilder = new();
 
         [Fact]
         public void ThrowsExceptionGivenOrderWithExistingId()
@@ -16,6 +16,16 @@ namespace BuilderTestSample.Tests
             var order = _orderBuilder
                             .WithId(123)
                             .Build();
+
+            Assert.Throws<InvalidOrderException>(() => _orderService.PlaceOrder(order));
+        }
+
+        [Fact]
+        public void PlaceOrder_WhenTotalAmountIsZero_ThenThrowsException()
+        {
+            var order = _orderBuilder
+                .WithTotalAmount(0.0m)
+                .Build();
 
             Assert.Throws<InvalidOrderException>(() => _orderService.PlaceOrder(order));
         }
