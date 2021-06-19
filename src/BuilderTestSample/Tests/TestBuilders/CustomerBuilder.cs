@@ -8,6 +8,7 @@ namespace BuilderTestSample.Tests.TestBuilders
         private readonly Random _random = new Random();
 
         private int _customerId;
+        private Address _homeAddress;
 
         public CustomerBuilder()
         {
@@ -20,9 +21,19 @@ namespace BuilderTestSample.Tests.TestBuilders
             return this;
         }
 
+        public CustomerBuilder WithHomeAddress(Address homeAddress)
+        {
+            _homeAddress = homeAddress;
+            return this;
+        }
+
+
         public Customer Build()
         {
-            return new Customer(_customerId);
+            return new Customer(_customerId)
+            {
+                HomeAddress = _homeAddress,
+            };
         }
     }
 }
