@@ -63,7 +63,7 @@ namespace BuilderTestSample.Services
 
             if (customer.CreditRating <= MinCreditRanking)
             {
-                throw new InsufficientCreditException("Customer must have credit rating > 200");
+                throw new InsufficientCreditException($"Customer must have credit rating > {MinCreditRanking}");
             }
 
             if (customer.TotalPurchases < 0)
